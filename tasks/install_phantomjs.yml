@@ -1,0 +1,54 @@
+---
+
+- name: Make a folder for PhantomJS
+  file:
+    path=/opt/phantomjs
+    state=directory
+    mode=0755
+  sudo: yes
+
+- name: Download compiled PhantomJS binary
+  get_url:
+    url=http://github.com/Fluxusio/binaries/raw/master/phantomjs-2.0-alpha
+    dest=/opt/phantomjs/phantomjs-2.0-alpha
+    mode=0755
+  sudo: yes
+
+- name: Install PhantomJS's dependencies
+  apt: name={{ item }} state=present
+  with_items:
+    - g++
+    - flex
+    - bison
+    - gperf
+    - ruby
+    - perl
+    - libsqlite3-dev
+    - libfontconfig1-dev
+    - libicu-dev
+    - libfreetype6
+    - libssl-dev
+    - libpng-dev
+    - libjpeg-dev
+  sudo: yes
+
+- name: Remove any old symlinks to PhantomJS binary
+  file:
+    path={{ item }}
+    state=absent
+  with_items:
+    - /usr/local/share/phantomjs
+    - /usr/local/bin/phantomjs
+    - /usr/bin/phantomjs
+  sudo: yes
+
+- name: Symlink to PhantomJS binary
+  file:
+    src=/opt/phantomjs/phantomjs-2.0-alpha
+    dest={{ item }}
+    state=link
+  with_items:
+    - /usr/local/share/phantomjs
+    - /usr/local/bin/phantomjs
+    - /usr/bin/phantomjs
+  sudo: yes

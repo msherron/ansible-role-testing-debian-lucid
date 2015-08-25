@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Michael Sherron
+  description: Ansible role for installing and configuring testing tools
+  min_ansible_version: 1.4
+  platforms:
+    - Ubuntu 10.04
+  categories:
+    - test
+    - php
+  dependencies:
+  - { role: msherron.brightbox-ruby-debian-lucid }

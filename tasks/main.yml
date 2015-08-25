@@ -1,0 +1,5 @@
+---
+
+- include: install_behat.yml
+- include: install_phantomjs.yml
+- include: install_wraith.yml
